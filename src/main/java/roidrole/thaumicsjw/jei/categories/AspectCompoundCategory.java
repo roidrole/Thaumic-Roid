@@ -12,7 +12,6 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 import roidrole.thaumicsjw.HEIPlugin;
 import roidrole.thaumicsjw.Tags;
-import roidrole.thaumicsjw.jei.AspectListIngredient;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
@@ -57,9 +56,9 @@ public class AspectCompoundCategory implements IRecipeCategory<AspectCompoundCat
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, AspectCompoundCategory.AspectCompoundWrapper recipeWrapper, IIngredients ingredients) {
-        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(0, true, new AspectListIngredient.Renderer(), 8, 2, 16, 16, 0, 0);
-        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(1, false, new AspectListIngredient.Renderer(), 46, 2, 16, 16, 0, 0);
-        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(2, false, new AspectListIngredient.Renderer(), 82, 2, 16, 16, 0, 0);
+        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(0, true, 8, 2);
+        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(1, false, 46, 2);
+        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(2, false, 82, 2);
         recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(0, ingredients.getInputs(HEIPlugin.ASPECT_LIST).get(0));
         recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(1, ingredients.getOutputs(HEIPlugin.ASPECT_LIST).get(0));
         recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(2, ingredients.getOutputs(HEIPlugin.ASPECT_LIST).get(1));
@@ -76,7 +75,7 @@ public class AspectCompoundCategory implements IRecipeCategory<AspectCompoundCat
 
         @Override
         public void getIngredients(IIngredients ingredients) {
-            ingredients.setInput(HEIPlugin.ASPECT_LIST, new AspectList().add(this.aspect, 2));
+            ingredients.setInput(HEIPlugin.ASPECT_LIST, new AspectList().add(this.aspect, 1));
             ingredients.setOutputs(
                 HEIPlugin.ASPECT_LIST,
                 Arrays.stream(this.aspect.getComponents())

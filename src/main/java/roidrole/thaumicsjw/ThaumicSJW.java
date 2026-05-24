@@ -15,7 +15,8 @@ import roidrole.thaumicsjw.jei.ResearchManager;
     version = Tags.VERSION,
     dependencies =
         "required-after:jei@[1.12.2-4.15.0.275,);" +
-        "required-after:thaumcraft@[6.1.BETA20,);"
+        "required-after:thaumcraft@[6.1.BETA20,);" +
+        "required-after:thaumicapi"
 )
 public class ThaumicSJW {
     public static Logger LOGGER;

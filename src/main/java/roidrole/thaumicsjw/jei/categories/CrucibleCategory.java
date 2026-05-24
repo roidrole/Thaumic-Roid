@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 import roidrole.thaumicsjw.HEIPlugin;
 import roidrole.thaumicsjw.Tags;
 import roidrole.thaumicsjw.jei.AlphaDrawable;
-import roidrole.thaumicsjw.jei.AspectListIngredient;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
@@ -58,7 +57,7 @@ public class CrucibleCategory extends AbstractResearchCategory<CrucibleCategory.
         int center = (ingredients.getInputs(HEIPlugin.ASPECT_LIST).size() * SPACE) / 2;
         int x = 0;
         for (List<AspectList> aspectList : ingredients.getInputs(HEIPlugin.ASPECT_LIST)) {
-            recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(x + 1, true, new AspectListIngredient.Renderer(), ASPECT_X - center + x * SPACE, ASPECT_Y, 16, 16, 0, 0);
+            recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(x + 1, true, ASPECT_X - center + x * SPACE, ASPECT_Y);
             recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(x + 1, aspectList);
             ++x;
         }

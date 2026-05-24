@@ -18,7 +18,6 @@ import org.lwjgl.opengl.GL11;
 import roidrole.thaumicsjw.HEIPlugin;
 import roidrole.thaumicsjw.Tags;
 import roidrole.thaumicsjw.jei.AlphaDrawable;
-import roidrole.thaumicsjw.jei.AspectListIngredient;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IThaumcraftRecipe;
@@ -76,7 +75,7 @@ public class InfusionCategory extends AbstractResearchCategory<InfusionCategory.
         int center = (ingredients.getInputs(HEIPlugin.ASPECT_LIST).size() * SPACE) / 2;
         int x = 0;
         for (List<AspectList> aspectList : ingredients.getInputs(HEIPlugin.ASPECT_LIST)) {
-            recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(x + slot, true, new AspectListIngredient.Renderer(), 30 + ASPECT_X - center + x * SPACE, ASPECT_Y, 16, 16, 0, 0);
+            recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(x + slot, true, 30 + ASPECT_X - center + x * SPACE, ASPECT_Y);
             recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(x + slot, aspectList);
             ++x;
         }

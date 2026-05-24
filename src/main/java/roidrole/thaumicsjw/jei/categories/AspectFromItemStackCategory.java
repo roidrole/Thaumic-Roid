@@ -15,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 import roidrole.thaumicsjw.HEIPlugin;
 import roidrole.thaumicsjw.Tags;
 import roidrole.thaumicsjw.jei.AlphaDrawable;
-import roidrole.thaumicsjw.jei.AspectListIngredient;
 import thaumcraft.api.aspects.AspectList;
 
 import java.util.List;
@@ -64,7 +63,7 @@ public class AspectFromItemStackCategory implements IRecipeCategory<AspectFromIt
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, AspectFromItemStackWrapper recipeWrapper, IIngredients ingredients) {
-        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(0, false, new AspectListIngredient.Renderer(), 8 + 81 - 9, 8, 16, 16, 0, 0);
+        recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).init(0, false, 8 + 81 - 9, 8);
         recipeLayout.getIngredientsGroup(HEIPlugin.ASPECT_LIST).set(0, ingredients.getOutputs(HEIPlugin.ASPECT_LIST).get(0));
         int slot = 0;
         int row = 9;

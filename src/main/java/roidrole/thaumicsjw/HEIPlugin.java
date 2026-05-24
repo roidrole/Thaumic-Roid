@@ -1,7 +1,7 @@
 package roidrole.thaumicsjw;
 
+import com.invadermonky.thaumicapi.api.ThaumicAPIJEIPlugin;
 import mezz.jei.api.*;
-import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IIngredientType;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
-import roidrole.thaumicsjw.jei.AspectListIngredient;
 import roidrole.thaumicsjw.jei.DisplayOnlyRecipe;
 import roidrole.thaumicsjw.jei.ResearchManager;
 import roidrole.thaumicsjw.jei.categories.*;
@@ -28,33 +27,17 @@ import thaumcraft.common.container.ContainerArcaneWorkbench;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @JEIPlugin
 public class HEIPlugin implements IModPlugin {
 
-	public static final IIngredientType<AspectList> ASPECT_LIST = () -> AspectList.class;
+	public static final IIngredientType<AspectList> ASPECT_LIST = ThaumicAPIJEIPlugin.ASPECT_INGREDIENT;
 
 	@Override
 	public void registerSubtypes(ISubtypeRegistry subtypeRegistry) {
 		subtypeRegistry.useNbtForSubtypes(ItemsTC.crystalEssence);
 		subtypeRegistry.useNbtForSubtypes(ItemsTC.phial);
-	}
-
-	@Override
-	public void registerIngredients(IModIngredientRegistration registry) {
-		List<AspectList> aspects = Aspect.aspects.values()
-			.stream()
-			.map(aspect -> new AspectList().add(aspect, 0))
-			.collect(Collectors.toList());
-
-		registry.register(
-			ASPECT_LIST,
-			aspects,
-			new AspectListIngredient.Helper(),
-			new AspectListIngredient.Renderer()
-		);
 	}
 
 	@Override
