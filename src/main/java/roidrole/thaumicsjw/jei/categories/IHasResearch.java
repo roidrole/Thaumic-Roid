@@ -2,8 +2,9 @@ package roidrole.thaumicsjw.jei.categories;
 
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
@@ -39,9 +40,20 @@ public interface IHasResearch extends IRecipeWrapper {
 
     @Override
     default void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        if (!ThaumcraftCapabilities.knowsResearch(Minecraft.getMinecraft().player, this.getResearch())) {
-            minecraft.getRenderItem().renderItemIntoGUI(new ItemStack(Blocks.BARRIER), getBarrierX(), getBarrierY());
+
+        if (ThaumcraftCapabilities.knowsResearch(minecraft.player, this.getResearch())) {
+            minecraft.getTextureManager().bindTexture(new ResourceLocation("thaumicjei", "textures/gui/thaumonomicon_green.png"));
+        } else {
+            //TODO: Check if research can be researched
+            minecraft.getTextureManager().bindTexture(new ResourceLocation("thaumicjei", "textures/gui/thaumonomicon_red.png"));
         }
+
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        Gui.drawScaledCustomSizeModalRect(getBarrierX(), getBarrierY(), 0f, 0f, 16, 16, 16, 16, 16, 16);
+        GlStateManager.disableBlend();
+
     }
 
     int getBarrierX();

@@ -101,12 +101,12 @@ public class CrucibleCategory extends AbstractResearchCategory<CrucibleCategory.
 
         @Override
         public int getBarrierX() {
-            return 22;
+            return 87;
         }
 
         @Override
         public int getBarrierY() {
-            return 14;
+            return 10;
         }
 
         @Override

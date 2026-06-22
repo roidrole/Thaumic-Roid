@@ -151,7 +151,7 @@ public class ArcaneWorkbenchCategory extends AbstractResearchCategory<ArcaneWork
 
         @Override
         public int getBarrierX() {
-            return 15;
+            return 108;
         }
 
         @Override

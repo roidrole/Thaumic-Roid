@@ -21,14 +21,15 @@ import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerOre;
 import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerSimple;
 import thaumcraft.api.crafting.IDustTrigger;
 import thaumcraft.api.items.ItemsTC;
+import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.api.research.ResearchCategory;
+import thaumcraft.api.research.ResearchEntry;
+import thaumcraft.client.gui.GuiResearchPage;
 import thaumcraft.common.lib.crafting.DustTriggerMultiblock;
 import thaumcraft.common.lib.crafting.DustTriggerOre;
 import thaumcraft.common.lib.crafting.DustTriggerSimple;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCategory.SalisMundusRecipeWrapper> {
 
@@ -39,6 +40,13 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 
 	//Shared ItemStack for all wrappers
 	public static final List<ItemStack> salisMundus = Collections.singletonList(new ItemStack(ItemsTC.salisMundus));
+	public static final List<List<ItemStack>> multiblockInput = Arrays.asList(
+		salisMundus,
+		Collections.singletonList(new ItemStack(ItemsTC.thaumonomicon))
+	);
+	static {
+		multiblockInput.get(1).get(0).setStackDisplayName("Show multiblock in thaumonomicon");
+	}
 
 	public SalisMundusCategory(IJeiHelpers helper){
 		super();
@@ -60,7 +68,18 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 	public void populateRecipes() {
 		this.recipes = new ArrayList<>();
 		for (IDustTrigger trigger : IDustTrigger.triggers) {
-			SalisMundusRecipeWrapper wrapper = new SalisMundusRecipeWrapper(trigger);
+			SalisMundusRecipeWrapper wrapper;
+			if(trigger instanceof DustTriggerSimple){
+				wrapper = new SalisMundusSimpleWrapper((DustTriggerSimple)trigger);
+			}
+			else if(trigger instanceof DustTriggerOre){
+				wrapper = new SalisMundusOreWrapper((DustTriggerOre)trigger);
+			}
+			else if(trigger instanceof DustTriggerMultiblock){
+				wrapper = new SalisMundusMultiblockWrapper((DustTriggerMultiblock)trigger);
+			} else {
+				continue;
+			}
 			if(wrapper.isValid()) {
 				this.recipes.add(wrapper);
 			}
@@ -99,39 +118,10 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 		group.set(ingredients);
 	}
 
-	//TODO: remove invalid recipes
-	public static class SalisMundusRecipeWrapper implements IHasResearch {
-
+	public static abstract class SalisMundusRecipeWrapper implements IHasResearch {
 		List<List<ItemStack>> input;
 		List<List<ItemStack>> output;
 		String research;
-		public SalisMundusRecipeWrapper(IDustTrigger trigger){
-			if(trigger instanceof DustTriggerOre){
-				AccessorDustTriggerOre oreTrigger = (AccessorDustTriggerOre) trigger;
-				this.input = Arrays.asList(salisMundus, OreDictionary.getOres(oreTrigger.getTarget()));
-				this.output = HEIPlugin.nestedSingletonList(oreTrigger.getResult());
-				this.research = oreTrigger.getResearch();
-			} else if(trigger instanceof DustTriggerSimple){
-				AccessorDustTriggerSimple simpleTrigger = (AccessorDustTriggerSimple) trigger;
-				Block target = simpleTrigger.getTarget();
-				List<ItemStack> inputs;
-				if(target == Blocks.CAULDRON){
-					inputs = Collections.singletonList(new ItemStack(Items.CAULDRON));
-				} else {
-					inputs = NonNullList.create();
-					target.getSubBlocks(target.getCreativeTab(), (NonNullList<ItemStack>) inputs);
-				}
-				this.input = Arrays.asList(salisMundus, inputs);
-				this.output = HEIPlugin.nestedSingletonList(simpleTrigger.getResult());
-				this.research = simpleTrigger.getResearch();
-			} else if(trigger instanceof DustTriggerMultiblock){
-				AccessorDustTriggerMultiblock multiblockTrigger = (AccessorDustTriggerMultiblock) trigger;
-				//TODO
-				this.research = multiblockTrigger.getResearch();
-				this.input = Arrays.asList(salisMundus, Collections.emptyList());
-				this.output = HEIPlugin.nestedSingletonList(ItemStack.EMPTY);
-			}
-		}
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
@@ -156,6 +146,60 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 
 		public boolean isValid(){
 			return !this.input.get(1).isEmpty();
+		}
+	}
+
+	public static class SalisMundusSimpleWrapper extends SalisMundusRecipeWrapper {
+		public SalisMundusSimpleWrapper(DustTriggerSimple trigger) {
+			AccessorDustTriggerSimple simpleTrigger = (AccessorDustTriggerSimple) trigger;
+			Block target = simpleTrigger.getTarget();
+			List<ItemStack> inputs;
+			if(target == Blocks.CAULDRON){
+				inputs = Collections.singletonList(new ItemStack(Items.CAULDRON));
+			} else {
+				inputs = NonNullList.create();
+				target.getSubBlocks(target.getCreativeTab(), (NonNullList<ItemStack>) inputs);
+			}
+			this.input = Arrays.asList(salisMundus, inputs);
+			this.output = HEIPlugin.nestedSingletonList(simpleTrigger.getResult());
+			this.research = simpleTrigger.getResearch();
+		}
+	}
+	public static class SalisMundusOreWrapper extends SalisMundusRecipeWrapper {
+		public SalisMundusOreWrapper(DustTriggerOre trigger) {
+			AccessorDustTriggerOre oreTrigger = (AccessorDustTriggerOre) trigger;
+			this.input = Arrays.asList(salisMundus, OreDictionary.getOres(oreTrigger.getTarget()));
+			this.output = HEIPlugin.nestedSingletonList(oreTrigger.getResult());
+			this.research = oreTrigger.getResearch();
+		}
+	}
+	public static class SalisMundusMultiblockWrapper extends SalisMundusRecipeWrapper {
+		public SalisMundusMultiblockWrapper(DustTriggerMultiblock trigger){
+			AccessorDustTriggerMultiblock multiblockTrigger = (AccessorDustTriggerMultiblock) trigger;
+			this.research = multiblockTrigger.getResearch();
+			this.input = multiblockInput;
+			this.output = HEIPlugin.nestedSingletonList(ItemStack.EMPTY);
+		}
+
+		@Override
+		public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
+			//TODO: open the GUI player.openGui(Thaumcraft.instance, 12, world, 0, 0, 0); (ItemThaumonomicon) and accessorGUIResearchBrowser
+			//ProxyGUI for the gui ID meaning (12 is got GUIResearchBrowser, the GUI for the thaumonomicon
+			if(mouseX > 58 && mouseX < 74 && mouseY > 9 && mouseY < 25){
+				//minecraft.player.openGui(Thaumcraft.instance, 12, minecraft.world, 0, 0, 0);
+				//AccessorGUIResearchBrowser.setSelectedCategory(this.getResearch());
+				ResearchEntry research = null;
+				for(ResearchCategory category : ResearchCategories.researchCategories.values()){
+					research = category.research.get(this.getResearch());
+					if(research != null){
+						break;
+					}
+				}
+				if(research != null){
+					minecraft.displayGuiScreen(new GuiResearchPage(research, null, 0, 0));
+				}
+			}
+			return super.handleClick(minecraft, mouseX, mouseY, mouseButton);
 		}
 	}
 }

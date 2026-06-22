@@ -37,7 +37,6 @@ dependencies {
     //Nice to play with, and useful for debugging
     runtimeOnly 'curse.maven:nbt-tooltip-274816:2567902'
 
-
     compileOnly('curse.maven:bwm-suite-246760:5702821')
 
     implementation('com.cleanroommc:configanytime:3.0')
