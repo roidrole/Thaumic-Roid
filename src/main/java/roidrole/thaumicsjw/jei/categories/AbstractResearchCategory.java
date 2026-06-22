@@ -19,7 +19,7 @@ public abstract class AbstractResearchCategory<T extends IHasResearch> implement
 	}
 
 	@Override
-	public String getModName() {
+	public final String getModName() {
 		return Tags.MOD_NAME;
 	}
 }

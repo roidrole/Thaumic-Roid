@@ -21,10 +21,6 @@ import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerOre;
 import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerSimple;
 import thaumcraft.api.crafting.IDustTrigger;
 import thaumcraft.api.items.ItemsTC;
-import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchCategory;
-import thaumcraft.api.research.ResearchEntry;
-import thaumcraft.client.gui.GuiResearchPage;
 import thaumcraft.common.lib.crafting.DustTriggerMultiblock;
 import thaumcraft.common.lib.crafting.DustTriggerOre;
 import thaumcraft.common.lib.crafting.DustTriggerSimple;
@@ -84,11 +80,6 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 				this.recipes.add(wrapper);
 			}
 		}
-	}
-
-	@Override
-	public String getModName() {
-		return Tags.MOD_NAME;
 	}
 
 	@Override
@@ -179,27 +170,6 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 			this.research = multiblockTrigger.getResearch();
 			this.input = multiblockInput;
 			this.output = HEIPlugin.nestedSingletonList(ItemStack.EMPTY);
-		}
-
-		@Override
-		public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
-			//TODO: open the GUI player.openGui(Thaumcraft.instance, 12, world, 0, 0, 0); (ItemThaumonomicon) and accessorGUIResearchBrowser
-			//ProxyGUI for the gui ID meaning (12 is got GUIResearchBrowser, the GUI for the thaumonomicon
-			if(mouseX > 58 && mouseX < 74 && mouseY > 9 && mouseY < 25){
-				//minecraft.player.openGui(Thaumcraft.instance, 12, minecraft.world, 0, 0, 0);
-				//AccessorGUIResearchBrowser.setSelectedCategory(this.getResearch());
-				ResearchEntry research = null;
-				for(ResearchCategory category : ResearchCategories.researchCategories.values()){
-					research = category.research.get(this.getResearch());
-					if(research != null){
-						break;
-					}
-				}
-				if(research != null){
-					minecraft.displayGuiScreen(new GuiResearchPage(research, null, 0, 0));
-				}
-			}
-			return super.handleClick(minecraft, mouseX, mouseY, mouseButton);
 		}
 	}
 }

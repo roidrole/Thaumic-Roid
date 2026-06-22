@@ -8,7 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.api.research.ResearchCategory;
 import thaumcraft.api.research.ResearchEntry;
+import thaumcraft.client.gui.GuiResearchPage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +56,24 @@ public interface IHasResearch extends IRecipeWrapper {
         Gui.drawScaledCustomSizeModalRect(getBarrierX(), getBarrierY(), 0f, 0f, 16, 16, 16, 16, 16, 16);
         GlStateManager.disableBlend();
 
+    }
+
+    @Override
+    default boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
+        if(mouseX > getBarrierX() && mouseX < getBarrierX() + 16 && mouseY > getBarrierY() && mouseY < getBarrierY() + 16){
+            ResearchEntry research = null;
+            for(ResearchCategory category : ResearchCategories.researchCategories.values()){
+                research = category.research.get(this.getResearch());
+                if(research != null){
+                    break;
+                }
+            }
+            if(research != null && ThaumcraftCapabilities.knowsResearch(minecraft.player, research.getParents())){
+                //TODO: Escape returns to JEI. Class extending?
+                minecraft.displayGuiScreen(new GuiResearchPage(research, null, 0, 0));
+            }
+        }
+        return IRecipeWrapper.super.handleClick(minecraft, mouseX, mouseY, mouseButton);
     }
 
     int getBarrierX();

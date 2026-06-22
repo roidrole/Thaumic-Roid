@@ -11,7 +11,5 @@
 		"AccessorDustTriggerSimple"
 	],
 	"server": [],
-	"client": [
-		"AccessorGUIResearchBrowser"
-	]
+	"client": []
 }
