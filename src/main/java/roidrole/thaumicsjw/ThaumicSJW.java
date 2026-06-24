@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import roidrole.thaumicsjw.jei.ResearchManager;
+import roidrole.thaumicsjw.visualores.PacketHandler;
 
 
 @Mod(
@@ -26,6 +27,9 @@ public class ThaumicSJW {
         LOGGER = event.getModLog();
         if(event.getSide() == Side.CLIENT && ThaumicSJWConfig.jeiConfig.hideRecipesIfMissingResearch){
             MinecraftForge.EVENT_BUS.register(ResearchManager.class);
+        }
+        if(ThaumicSJWConfig.visualOresConfig.dioptraUpdatesAura){
+            PacketHandler.preInit();
         }
     }
 

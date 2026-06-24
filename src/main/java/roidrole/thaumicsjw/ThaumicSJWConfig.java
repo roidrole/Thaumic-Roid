@@ -32,23 +32,22 @@ public class ThaumicSJWConfig {
 		public boolean fasterHash = false;
 
 		@Config.Comment({
-			"Implements FastWorkbench for the pattern crafter",
-			"Shouldn't cause much issue",
+			"Implements FastWorkbench for the pattern crafter"
 		})
 		public boolean patternCrafterRecipeCache = true;
 
 		@Config.Comment({
-			"Optimizes the acquisition of oreDicts ending in a wildcard i.e. ingot*",
-			"Shouldn't cause much issue",
+			"Optimizes the acquisition of oreDicts ending in a wildcard i.e. ingot*"
 		})
 		public boolean fasterOreDictWildcard = true;
 
 		@Config.Comment({
 			"Caches the entity and itemstack aspects on first launch",
 			"Limits the amount of cached different aspects and the quantity of any aspect to 255",
-			"This limit does not apply on aspects computed through recipes"
+			"This limit does not apply on aspects computed through recipes",
+			"This is likely to break with Thaumic Speedup's ItemStack hash."
 		})
-		public boolean aspectCache = true;
+		public boolean aspectCache = false;
 	}
 
 
@@ -93,5 +92,16 @@ public class ThaumicSJWConfig {
 			@Config.Name("Infernal Furnace")
 			public boolean infernalFurnace = true;
 		}
+	}
+
+
+	@Config.Name("VisualOres Configs")
+	public static final VisualOres visualOresConfig = new VisualOres();
+	public static class VisualOres {
+		@Config.Comment({
+			"Whether thaumic dioptra should send aura data to every online player that interacted with it",
+			"This makes the dioptra auto-update the VisualOres map in a 13x13 chunk square centered on the dioptra"
+		})
+		public boolean dioptraUpdatesAura = true;
 	}
 }

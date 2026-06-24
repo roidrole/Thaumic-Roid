@@ -1,5 +1,6 @@
 package roidrole.thaumicsjw;
 
+import net.minecraftforge.fml.common.Loader;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class LateMixinLoader implements ILateMixinLoader {
 		}
 		if(ThaumicSJWConfig.speedupConfig.aspectCache){
 			mixinConfigs.add("mixins.thaumicsjw.aspect_cache.json");
+		}
+		if(ThaumicSJWConfig.visualOresConfig.dioptraUpdatesAura && Loader.isModLoaded("visualores")){
+			mixinConfigs.add("mixins.thaumicsjw.dioptra_aura.json");
 		}
 		mixinConfigs.add("mixins.thaumicsjw.accessors.json");
 		return mixinConfigs;
