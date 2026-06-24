@@ -16,7 +16,7 @@ import thaumcraft.common.tiles.crafting.TilePatternCrafter;
 public abstract class PatternCrafterRecipeCache {
 
 	@Unique
-	private IRecipe tfutils_lastRecipe = CraftingManager.REGISTRY.iterator().next();
+	private IRecipe thaumicsjw_lastRecipe = CraftingManager.REGISTRY.iterator().next();
 
 	@Redirect(
 		method = "craft",
@@ -27,16 +27,16 @@ public abstract class PatternCrafterRecipeCache {
 		),
 		remap = false
 	)
-	private IRecipe tfutils_cacheLastRecipe(InventoryCrafting inventoryCrafting, World world){
+	private IRecipe thaumicsjw_cacheLastRecipe(InventoryCrafting inventoryCrafting, World world){
 		if(inventoryCrafting.isEmpty()){
 			return null;
 		}
-		if(this.tfutils_lastRecipe.matches(inventoryCrafting, world)){
-			return this.tfutils_lastRecipe;
+		if(this.thaumicsjw_lastRecipe.matches(inventoryCrafting, world)){
+			return this.thaumicsjw_lastRecipe;
 		}
 		IRecipe newRecipe = CraftingManager.findMatchingRecipe(inventoryCrafting, world);
 		if(newRecipe != null){
-			this.tfutils_lastRecipe = newRecipe;
+			this.thaumicsjw_lastRecipe = newRecipe;
 		}
 		return newRecipe;
 	}
@@ -50,7 +50,7 @@ public abstract class PatternCrafterRecipeCache {
 		),
 		remap = false
 	)
-	private NonNullList<ItemStack> tfutils_useCache(InventoryCrafting inventoryCrafting, World world){
-		return tfutils_lastRecipe.getRemainingItems(inventoryCrafting);
+	private NonNullList<ItemStack> thaumicsjw_useCache(InventoryCrafting inventoryCrafting, World world){
+		return thaumicsjw_lastRecipe.getRemainingItems(inventoryCrafting);
 	}
 }

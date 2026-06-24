@@ -1,7 +1,7 @@
 {
 	"package": "roidrole.thaumicsjw.mixins.aspect_cache",
 	"required": true,
-	"refmap": "mixins.tfutils.refmap.json",
+	"refmap": "mixins.thaumicsjw.refmap.json",
 	"target": "@env(DEFAULT)",
 	"minVersion": "0.8.5",
 	"compatibilityLevel": "JAVA_8",

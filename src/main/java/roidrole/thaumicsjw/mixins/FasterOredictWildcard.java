@@ -13,7 +13,7 @@ import java.util.List;
 @Mixin(ThaumcraftApiHelper.class)
 public abstract class FasterOredictWildcard {
 	@Unique
-	private static String[] tfutils_oreNames;
+	private static String[] thaumicsjw_oreNames;
 
 	/**
 	 * @author Rongmario
@@ -24,11 +24,11 @@ public abstract class FasterOredictWildcard {
 		oreDict = oreDict.trim();
 		if (oreDict.endsWith("*")) {
 			final List<ItemStack> ores = new ObjectArrayList<>();
-			if (tfutils_oreNames == null) {
-				tfutils_oreNames = OreDictionary.getOreNames();
+			if (thaumicsjw_oreNames == null) {
+				thaumicsjw_oreNames = OreDictionary.getOreNames();
 			}
 			String wildcard = oreDict.replaceAll("\\*", "");
-			for (String ore : tfutils_oreNames) {
+			for (String ore : thaumicsjw_oreNames) {
 				if (ore.startsWith(wildcard)) {
 					ores.addAll(OreDictionary.getOres(ore, false));
 				}

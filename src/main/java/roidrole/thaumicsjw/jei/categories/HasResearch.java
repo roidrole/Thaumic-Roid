@@ -21,6 +21,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ * TODO: turn this class into an IIngredientType (ResearchEntry) instead
+ * Cheating in that IIngredientType can mean getting the research paper for it
+ * The recipe for it would be opening it in JEI
+ * And Thaumcraft already has all the assets to display it.
+ */
+
 public abstract class HasResearch implements IRecipeWrapper {
     public abstract String getResearch();
     public abstract int getBarrierX();
