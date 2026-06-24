@@ -6,9 +6,8 @@ import mezz.jei.api.gui.IGuiIngredientGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.gui.elements.DrawableBlank;
+import mezz.jei.config.Constants;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,12 +15,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 import roidrole.thaumicsjw.HEIPlugin;
 import roidrole.thaumicsjw.Tags;
-import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerMultiblock;
 import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerOre;
 import roidrole.thaumicsjw.mixins.accessors.AccessorDustTriggerSimple;
 import thaumcraft.api.crafting.IDustTrigger;
 import thaumcraft.api.items.ItemsTC;
-import thaumcraft.common.lib.crafting.DustTriggerMultiblock;
 import thaumcraft.common.lib.crafting.DustTriggerOre;
 import thaumcraft.common.lib.crafting.DustTriggerSimple;
 
@@ -31,23 +28,17 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 
 	public static final String UUID = Tags.MOD_ID + ".salis_mundus";
 	public static final String title = new ItemStack(ItemsTC.salisMundus).getDisplayName();
-	public final IDrawable slot;
-	public final IJeiHelpers helpers;
+	public final IDrawable background;
 
 	//Shared ItemStack for all wrappers
 	public static final List<ItemStack> salisMundus = Collections.singletonList(new ItemStack(ItemsTC.salisMundus));
-	public static final List<List<ItemStack>> multiblockInput = Arrays.asList(
-		salisMundus,
-		Collections.singletonList(new ItemStack(ItemsTC.thaumonomicon))
-	);
-	static {
-		multiblockInput.get(1).get(0).setStackDisplayName("Show multiblock in thaumonomicon");
-	}
 
 	public SalisMundusCategory(IJeiHelpers helper){
 		super();
-		this.slot = helper.getGuiHelper().getSlotDrawable();
-		this.helpers = helper;
+		this.background = helper.getGuiHelper()
+			.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18)
+			.addPadding(14, 0, 0, 0)
+			.build();
 	}
 
 	@Override
@@ -70,9 +61,6 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 			}
 			else if(trigger instanceof DustTriggerOre){
 				wrapper = new SalisMundusOreWrapper((DustTriggerOre)trigger);
-			}
-			else if(trigger instanceof DustTriggerMultiblock){
-				wrapper = new SalisMundusMultiblockWrapper((DustTriggerMultiblock)trigger);
 			} else {
 				continue;
 			}
@@ -84,27 +72,20 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 
 	@Override
 	public IDrawable getBackground() {
-		return new DrawableBlank(103, 36);
-	}
-
-	@Override
-	public void drawExtras(Minecraft minecraft) {
-		slot.draw(minecraft, 2, 9);
-		slot.draw(minecraft, 30, 9);
-		slot.draw(minecraft, 58, 9);
+		return background;
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayout layout, SalisMundusRecipeWrapper wrapper, IIngredients ingredients) {
 		IGuiIngredientGroup<ItemStack> group = layout.getIngredientsGroup(VanillaTypes.ITEM);
 		//Salis Mundus
-		group.init(0, true,  2, 9);
+		group.init(0, true,  0, 14);
 
 		//Block to click
-		group.init(1, true,  30, 9);
+		group.init(1, true,  49, 14);
 
 		//Output
-		group.init(2, false,  58, 9);
+		group.init(2, false,  107, 14);
 
 		group.set(ingredients);
 	}
@@ -127,7 +108,7 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 
 		@Override
 		public int getBarrierX() {
-			return 0;
+			return 78;
 		}
 
 		@Override
@@ -162,14 +143,6 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 			this.input = Arrays.asList(salisMundus, OreDictionary.getOres(oreTrigger.getTarget()));
 			this.output = HEIPlugin.nestedSingletonList(oreTrigger.getResult());
 			this.research = oreTrigger.getResearch();
-		}
-	}
-	public static class SalisMundusMultiblockWrapper extends SalisMundusRecipeWrapper {
-		public SalisMundusMultiblockWrapper(DustTriggerMultiblock trigger){
-			AccessorDustTriggerMultiblock multiblockTrigger = (AccessorDustTriggerMultiblock) trigger;
-			this.research = multiblockTrigger.getResearch();
-			this.input = multiblockInput;
-			this.output = HEIPlugin.nestedSingletonList(ItemStack.EMPTY);
 		}
 	}
 }

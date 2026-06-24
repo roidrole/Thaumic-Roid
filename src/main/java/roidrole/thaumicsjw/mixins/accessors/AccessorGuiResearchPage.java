@@ -7,14 +7,14 @@ import thaumcraft.client.gui.GuiResearchPage;
 
 @Mixin(GuiResearchPage.class)
 public interface AccessorGuiResearchPage {
-	@Accessor("shownRecipe")
+	@Accessor(value = "shownRecipe",  remap = false)
 	static ResourceLocation getShownRecipe(){
 		throw new AssertionError();
 	}
 
-	@Accessor("showingKnowledge")
+	@Accessor(value = "showingKnowledge",  remap = false)
 	boolean getShowingKnowledge();
 
-	@Accessor("showingAspects")
+	@Accessor(value = "showingAspects",  remap = false)
 	boolean getShowingAspects();
 }
