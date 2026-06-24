@@ -3,9 +3,11 @@ package roidrole.thaumicsjw.jei.categories;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import roidrole.thaumicsjw.mixins.accessors.AccessorGuiResearchPage;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
@@ -13,6 +15,7 @@ import thaumcraft.api.research.ResearchCategory;
 import thaumcraft.api.research.ResearchEntry;
 import thaumcraft.client.gui.GuiResearchPage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +26,7 @@ public abstract class HasResearch implements IRecipeWrapper {
     public abstract int getBarrierX();
     public abstract int getBarrierY();
 
+    static GuiScreen oldGui = null;
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY) {
         if(mouseX < getBarrierX() || mouseX > getBarrierX() + 16 || mouseY < getBarrierY() || mouseY > getBarrierY() + 16){
@@ -80,7 +84,8 @@ public abstract class HasResearch implements IRecipeWrapper {
     public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
         if(mouseX > getBarrierX() && mouseX < getBarrierX() + 16 && mouseY > getBarrierY() && mouseY < getBarrierY() + 16){
             if(this.knowsParents()){
-                minecraft.displayGuiScreen(new GuiResearchPage(this.getResearchEntry(), null, 0, 0));
+                oldGui = minecraft.currentScreen;
+                minecraft.displayGuiScreen(new GuiResearchPageJEI(this.getResearchEntry(), null, 0, 0));
             }
         }
         return IRecipeWrapper.super.handleClick(minecraft, mouseX, mouseY, mouseButton);
@@ -108,4 +113,30 @@ public abstract class HasResearch implements IRecipeWrapper {
         return ThaumcraftCapabilities.knowsResearch(Minecraft.getMinecraft().player, research.getParents());
     }
 
+    public static class GuiResearchPageJEI extends GuiResearchPage {
+
+        public GuiResearchPageJEI(ResearchEntry research, ResourceLocation recipe, double x, double y) {
+            super(research, recipe, x, y);
+        }
+
+        @Override
+        protected void keyTyped(char typedChar, int keyCode) throws IOException {
+            if (keyCode != this.mc.gameSettings.keyBindInventory.getKeyCode() && keyCode != 1){
+                super.keyTyped(typedChar, keyCode);
+                return;
+            }
+
+            if(
+                AccessorGuiResearchPage.getShownRecipe() == null &&
+                !((AccessorGuiResearchPage)this).getShowingAspects() &&
+                !((AccessorGuiResearchPage)this).getShowingKnowledge()
+            ){
+                history.clear();
+                this.mc.displayGuiScreen(oldGui);
+                oldGui = null;
+            } else {
+                super.keyTyped(typedChar, keyCode);
+            }
+        }
+    }
 }
