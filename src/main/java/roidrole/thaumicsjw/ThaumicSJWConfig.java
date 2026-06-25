@@ -104,4 +104,17 @@ public class ThaumicSJWConfig {
 		})
 		public boolean dioptraUpdatesAura = true;
 	}
+
+	public static final HWYLA hwylaConfig = new HWYLA();
+	public static class HWYLA {
+		@Config.Comment("Integration for the brain in a jar. Shows xp contents")
+		public boolean brainInJar = true;
+		@Config.Comment("Integration for essentia tubes. Shows contents and suction")
+		public boolean essentiaTransport = true;
+		@Config.Comment("Integration for goggles display. Only used for the Infusion Matrix's stability")
+		public boolean gogglesDisplay = true;
+		@Config.Comment("integration for the vis battery. Shows current and max stored vis")
+		public boolean visBattery = true;
+
+	}
 }
