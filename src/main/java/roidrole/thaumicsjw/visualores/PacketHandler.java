@@ -9,6 +9,6 @@ public class PacketHandler {
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
 
 	public static void preInit() {
-		INSTANCE.registerMessage(PacketAuraToClient.class, PacketAuraToClient.class, 0, Side.CLIENT);
+		INSTANCE.registerMessage(PacketAuraToClient.Handler.class, PacketAuraToClient.class, 0, Side.CLIENT);
 	}
 }
