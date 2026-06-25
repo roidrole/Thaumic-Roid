@@ -13,16 +13,16 @@ public class LateMixinLoader implements ILateMixinLoader {
 		if(ThaumicSJWConfig.general.aspectTooltipInAllGUI){
 			mixinConfigs.add("mixins.thaumicsjw.aspect_tooltip_everywhere.json");
 		}
-		if(ThaumicSJWConfig.speedupConfig.fasterHash){
+		if(ThaumicSJWConfig.performanceConfig.fasterHash){
 			mixinConfigs.add("mixins.thaumicsjw.faster_hash.json");
 		}
-		if(ThaumicSJWConfig.speedupConfig.patternCrafterRecipeCache){
+		if(ThaumicSJWConfig.performanceConfig.patternCrafterRecipeCache){
 			mixinConfigs.add("mixins.thaumicsjw.patterncrafter_recipe_cache.json");
 		}
-		if(ThaumicSJWConfig.speedupConfig.fasterOreDictWildcard){
+		if(ThaumicSJWConfig.performanceConfig.fasterOreDictWildcard){
 			mixinConfigs.add("mixins.thaumicsjw.faster_oredict_wildcard.json");
 		}
-		if(ThaumicSJWConfig.speedupConfig.aspectCache){
+		if(ThaumicSJWConfig.performanceConfig.aspectCache){
 			mixinConfigs.add("mixins.thaumicsjw.aspect_cache.json");
 		}
 		if(ThaumicSJWConfig.visualOresConfig.dioptraUpdatesAura && Loader.isModLoaded("visualores")){

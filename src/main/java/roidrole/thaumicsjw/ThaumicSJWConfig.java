@@ -19,9 +19,9 @@ public class ThaumicSJWConfig {
 	}
 
 
-	@Config.Name("Speedup Configs")
-	public static final Speedup speedupConfig = new Speedup();
-	public static class Speedup {
+	@Config.Name("Performance Configs")
+	public static final Performance performanceConfig = new Performance();
+	public static class Performance {
 		@Config.Comment({
 			"Optimizes Thaumcraft's hash for ItemStacks",
 			"Thaumcraft internally uses this hash to map Aspects to ItemStacks and to handle oredict scanning",
@@ -105,6 +105,11 @@ public class ThaumicSJWConfig {
 		public boolean dioptraUpdatesAura = true;
 	}
 
+	@Config.Name("HWYLA Configs")
+	@Config.Comment({
+		"Only the config to disable the handlers are here.",
+		"The other configurations are in the in-game HWYLA config."
+	})
 	public static final HWYLA hwylaConfig = new HWYLA();
 	public static class HWYLA {
 		@Config.Comment("Integration for the brain in a jar. Shows xp contents")

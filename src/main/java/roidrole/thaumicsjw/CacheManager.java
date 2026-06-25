@@ -41,8 +41,8 @@ public class CacheManager {
 	}
 
 	public static void writeCaches(){
-		boolean genAspectCache = ThaumicSJWConfig.speedupConfig.aspectCache && !ASPECT_CACHE.isFile();
-		boolean genEntityCache = ThaumicSJWConfig.speedupConfig.aspectCache && !ENTITY_CACHE.isFile();
+		boolean genAspectCache = ThaumicSJWConfig.performanceConfig.aspectCache && !ASPECT_CACHE.isFile();
+		boolean genEntityCache = ThaumicSJWConfig.performanceConfig.aspectCache && !ENTITY_CACHE.isFile();
 		boolean genJEICache = ThaumicSJWConfig.jeiConfig.categoryToggle.aspectFromItemStack && !JEI_CACHE.isFile();
 
 		if(genAspectCache){
