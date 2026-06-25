@@ -19,6 +19,8 @@ All features of Thaumic JEI, plus:
 
 ### Waila
 - Suction and amount is shown in Waila (as opposed to only contents)
+- Brain in a Jar support
+- Vis Battery support
 - Support for all languages supported by Thaumcraft itself
 - HWYLA Config to require goggles
 - Aspects can be shown as their icon or as text
