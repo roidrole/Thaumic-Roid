@@ -1,6 +1,7 @@
 package roidrole.thaumicsjw;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -29,7 +30,7 @@ public class ThaumicSJW {
         if(event.getSide() == Side.CLIENT && ThaumicSJWConfig.jeiConfig.hideRecipesIfMissingResearch){
             MinecraftForge.EVENT_BUS.register(ResearchManager.class);
         }
-        if(ThaumicSJWConfig.visualOresConfig.dioptraUpdatesAura){
+        if(ThaumicSJWConfig.visualOresConfig.dioptraUpdatesAura && Loader.isModLoaded("visualores")){
             PacketHandler.preInit();
         }
     }
