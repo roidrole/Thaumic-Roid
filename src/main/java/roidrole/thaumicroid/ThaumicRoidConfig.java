@@ -56,7 +56,7 @@ public class ThaumicRoidConfig {
 	public static final JEI jeiConfig = new JEI();
 	public static class JEI {
 		@Config.Comment("Hide recipes from JEI if you don't have the research for it")
-		public boolean hideRecipesIfMissingResearch = true;
+		public boolean hideRecipesIfMissingResearch = false;
 
 		@Config.Comment("Items blacklisted from the checking in the Aspect For ItemStack. Format: 'minecraft:stone'")
 		@Config.Name("jeiBlacklist")
