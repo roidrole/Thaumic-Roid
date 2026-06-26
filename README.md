@@ -33,3 +33,4 @@ If VisualOres is loaded, the dioptra will update the aura display of chunks in a
 - ItemStack hash (incompatible with Thaumic Speedup)
 - Recipe cache (FastWorkbench) for the pattern crafter
 - Faster oredict wildcard (direct port of Thaumic Speedup's removed feature)
+There is **experimental compat** with Thaumic Speedup 5.0 for the Itemstack hash and aspect cache. I recommend disabling both if Thaumic Speedup is installed.

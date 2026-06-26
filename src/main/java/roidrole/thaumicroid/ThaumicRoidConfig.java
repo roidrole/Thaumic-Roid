@@ -25,28 +25,24 @@ public class ThaumicRoidConfig {
 	public static class Performance {
 		@Config.Comment({
 			"Optimizes Thaumcraft's hash for ItemStacks",
-			"Thaumcraft internally uses this hash to map Aspects to ItemStacks and to handle oredict scanning",
-			"Toggling this option will require you to delete the itemstack cache and the jei cache",
+			"Toggling this option will require you to delete the itemstack cache",
 			"Note that this option will make ItemStacks aspect matching disregard capabilities",
-			"If you have Thaumic Speedup installed, toggle this off."
+			"This might be more stable than Thaumic Speedup's if the aspect cache is enabled",
+			"If enabled and Thaumic Speedup is installed, it will overwrite Thaumic Speedup's."
 		})
 		public boolean fasterHash = false;
 
-		@Config.Comment({
-			"Implements FastWorkbench for the pattern crafter"
-		})
+		@Config.Comment("Implements FastWorkbench for the pattern crafter")
 		public boolean patternCrafterRecipeCache = true;
 
-		@Config.Comment({
-			"Optimizes the acquisition of oreDicts ending in a wildcard i.e. ingot*"
-		})
+		@Config.Comment("Optimizes the acquisition of oreDicts ending in a wildcard i.e. ingot*")
 		public boolean fasterOreDictWildcard = true;
 
 		@Config.Comment({
 			"Caches the entity and itemstack aspects on first launch",
 			"Limits the amount of cached different aspects and the quantity of any aspect to 255",
-			"This limit does not apply on aspects computed through recipes",
-			"This is likely to break with Thaumic Speedup's ItemStack hash."
+			"This limit does not apply on aspects computed through recipes unless they are computed during launch",
+			"If you have issue with aspects and you have Thaumic Speedup installed, turn this off or turn on our fasterHash"
 		})
 		public boolean aspectCache = false;
 	}
@@ -59,8 +55,7 @@ public class ThaumicRoidConfig {
 		public boolean hideRecipesIfMissingResearch = false;
 
 		@Config.Comment("Items blacklisted from the checking in the Aspect For ItemStack. Format: 'minecraft:stone'")
-		@Config.Name("jeiBlacklist")
-		public String[] blacklistedFromAspectChecking = {
+		public String[] jeiBlacklist = {
 			"minecraft:spawn_egg"
 		};
 

@@ -1,4 +1,4 @@
-package roidrole.thaumicroid.mixins.faster_hash;
+package roidrole.thaumicroid.mixins;
 
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,7 +8,7 @@ import thaumcraft.api.internal.CommonInternals;
 import java.util.Objects;
 
 @Mixin(CommonInternals.class)
-public abstract class CommonInternalsMixin {
+public abstract class FasterHash {
 	/**
 	 * @author roidrole
 	 * @reason Eliminate ItemStack.copy, serializeNBT

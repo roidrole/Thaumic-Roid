@@ -19,7 +19,10 @@ import roidrole.thaumicroid.visualores.PacketHandler;
         "required-after:jei@[1.12.2-4.15.0.275,);" +
         "required-after:thaumcraft@[6.1.BETA20,);" +
         "required-after:thaumicapi;" +
-        "required-after:mixinbooter"
+        "required-after:mixinbooter;" +
+        "required-after:configanytime;" +
+        //To force our hash to be used if enabled
+        "before:thaumicspeedup;"
 )
 public class ThaumicRoid {
     public static Logger LOGGER;

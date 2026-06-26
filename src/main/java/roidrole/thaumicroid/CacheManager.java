@@ -44,7 +44,7 @@ public class CacheManager {
 		boolean genAspectCache = ThaumicRoidConfig.performanceConfig.aspectCache && !ASPECT_CACHE.isFile();
 		boolean genEntityCache = ThaumicRoidConfig.performanceConfig.aspectCache && !ENTITY_CACHE.isFile();
 		boolean genJEICache = ThaumicRoidConfig.jeiConfig.categoryToggle.aspectFromItemStack && !JEI_CACHE.isFile();
-
+		
 		if(genAspectCache){
 			createAspectCache(ASPECT_CACHE);
 		}
@@ -63,7 +63,7 @@ public class CacheManager {
 		ThaumicRoid.LOGGER.info("Trying to cache {} aspects.", items.size());
 		//Filter out blacklisted items
 		Set<ResourceLocation> blacklist = new HashSet<>();
-		for (String string : ThaumicRoidConfig.jeiConfig.blacklistedFromAspectChecking){
+		for (String string : ThaumicRoidConfig.jeiConfig.jeiBlacklist){
 			blacklist.add(new ResourceLocation(string));
 		}
 		blacklist.add(null);
