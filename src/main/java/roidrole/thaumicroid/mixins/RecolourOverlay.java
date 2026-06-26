@@ -5,6 +5,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import roidrole.thaumicroid.ThaumicRoidConfig;
 
 @Mixin(AuraFluxPosition.class)
 public abstract class RecolourOverlay {
@@ -16,53 +18,45 @@ public abstract class RecolourOverlay {
 		method = "<init>",
 		name = "alpha",
 		at = @At(
-			value = "LOAD",
+			value = "STORE",
 			target = "alpha"
 		),
 		remap = false
 	)
-	int cutoffAlpha(int alpha){
-		return Math.max(1, alpha);
+	int configurableAlphaBorder(int alpha){
+		return Math.min(
+			ThaumicRoidConfig.visualOresConfig.overlay.max_value_border,
+			(int) Math.floor(flux * ThaumicRoidConfig.visualOresConfig.overlay.multiplier_border)
+		);
 	}
 
 	@ModifyVariable(
 		method = "<init>",
 		name = "midAlpha",
 		at = @At(
-			value = "LOAD",
+			value = "STORE",
 			target = "midAlpha"
 		),
 		remap = false
 	)
-	int addMidAlpha(int midAlpha){
-		return Math.max(1, (int)(midAlpha * 1.99f));
+	int configurableAlphaCenter(int midAlpha){
+		return Math.min(
+			ThaumicRoidConfig.visualOresConfig.overlay.max_value_center,
+			(int)Math.floor(flux * ThaumicRoidConfig.visualOresConfig.overlay.multiplier_center)
+		);
 	}
 
 
-	@ModifyVariable(
+	@Redirect(
 		method = "<init>",
-		name = "fluxAmount",
 		at = @At(
-			value = "LOAD",
-			target = "fluxAmount"
+			value = "INVOKE",
+			target = "Ljava/awt/Color;HSBtoRGB(FFF)I"
 		),
 		remap = false
 	)
-	float multiplyFlux(float fluxAmount) {
-		return 1.0f;
-	}
-
-	@ModifyVariable(
-		method = "<init>",
-		name = "totalAmount",
-		at = @At(
-			value = "LOAD",
-			target = "totalAmount"
-		),
-		remap = false
-	)
-	double multiplyFlux(double totalAmount) {
-		return this.flux/32.0d;
+	int configurableConstantColor(float hue, float saturation, float brightness) {
+		return ThaumicRoidConfig.visualOresConfig.overlay.color;
 	}
 
 }

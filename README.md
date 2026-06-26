@@ -3,6 +3,7 @@ Roid's Thaumcraft addon
 
 Thaumcraft addon integrating Thaumcraft with JEI, HWYLA and VisualOres and adds some performance improvements
 
+All features can be disabled in the config
 ## Features
 
 ### JEI
@@ -26,7 +27,8 @@ All features of Thaumic JEI, plus:
 - Aspects can be shown as their icon or as text
 
 ### Visual Ores
-If VisualOres is loaded, the dioptra will update the aura display of chunks in a 13x13 square centered on itself of every player who interacted with it.
+- Thaumic Dioptra will update the aura display of chunks in a 13x13 square centered on itself of every player who interacted with it.
+- Replace the default overlay with a much gentler one that only considers flux (progressively more opaque purple)
 
 ### Performance
 - Aspect cache (better than the one Thaumic Speedup had)

@@ -33,7 +33,7 @@ public class LateMixinLoader implements ILateMixinLoader {
 			if(ThaumicRoidConfig.visualOresConfig.dioptraUpdatesAura){
 				mixinConfigs.add("mixins.thaumicroid.dioptra_aura.json");
 			}
-			if(ThaumicRoidConfig.visualOresConfig.recolourOverlay){
+			if(ThaumicRoidConfig.visualOresConfig.overlay.enabled){
 				mixinConfigs.add("mixins.thaumicroid.recolour_overlay.json");
 			}
 		}

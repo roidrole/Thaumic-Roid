@@ -65,7 +65,6 @@ public class ThaumicRoidConfig {
 		@Config.Name("Category Toggles")
 		@Config.Comment("Toggles to unregister any JEI Category")
 		public final CategoryToggle categoryToggle = new CategoryToggle();
-
 		public static class CategoryToggle {
 			@Config.Name("Arcane Workbench")
 			public boolean arcaneWorkbench = true;
@@ -100,8 +99,24 @@ public class ThaumicRoidConfig {
 		})
 		public boolean dioptraUpdatesAura = true;
 
-		@Config.Comment("Replaces the default overlay with a much gentler one that doesn't take vis into account")
-		public boolean recolourOverlay = false;
+		@Config.Comment({
+			"Replaces the default overlay with a constant purple overlay whose opacity depends on flux",
+			"The formulas for opacity are separated between the center and the border of chunks ard are min(max_value, floor(fluxAmount * mutliplier))"
+		})
+		public final Overlay overlay = new Overlay();
+		public static class Overlay {
+			@Config.Comment("Allows modification of the overlay")
+			public boolean enabled = true;
+
+			@Config.RangeInt(min = 0, max = 255)
+			public int max_value_center = 0x77;
+			@Config.RangeInt(min = 0, max = 255)
+			public int max_value_border = 0xFF;
+			public float multiplier_center = 6.15f;
+			public float multiplier_border = 6.25f;
+			@Config.Comment("The color of the hue, in format 0xRRGGBB converted to decimal because forge configs")
+			public int color = 0x6F167C;
+		}
 	}
 
 	@Config.Name("HWYLA Configs")
