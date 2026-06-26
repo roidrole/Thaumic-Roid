@@ -22,7 +22,10 @@ import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.lib.crafting.DustTriggerOre;
 import thaumcraft.common.lib.crafting.DustTriggerSimple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCategory.SalisMundusRecipeWrapper> {
 

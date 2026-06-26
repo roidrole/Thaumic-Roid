@@ -44,7 +44,7 @@ dependencies {
     implementation('com.cleanroommc:configanytime:3.0')
     implementation('curse.maven:thaumcraft-223628:2629023')
     implementation('curse.maven:bubbles-a-baubles-fork-995393:6807550')
-    implementation('curse.maven:thaumicapi-1533287:8066628')
+    implementation('curse.maven:thaumicapi-1533287:8304846')
     implementation('curse.maven:hwyla-253449:2568751')
     implementation('mezz:jei:4.29.7')
     implementation('com.cleanroommc:configanytime:3.0')
