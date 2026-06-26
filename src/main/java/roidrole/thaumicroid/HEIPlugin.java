@@ -132,7 +132,7 @@ public class HEIPlugin implements IModPlugin {
 				stack.setStackDisplayName("3 Different Meat Nuggets");
 			}
 			for (ItemStack stack : crystal) {
-				stack.setStackDisplayName("3 Different Crystals");
+				stack.setStackDisplayName("3 Different Vis Crystals");
 			}
 			registry.addRecipes(
 				Arrays.asList(
