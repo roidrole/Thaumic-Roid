@@ -168,10 +168,12 @@ public class HEIPlugin implements IModPlugin {
 
 		registry.addAdvancedGuiHandlers(new ResearchTableAdvancedGuiHandler());
 		registry.addAdvancedGuiHandlers(new FocalManipulatorAdvancedGuiHandler());
+
 	}
 
 	@Override
 	public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+		//Hide Arcane recipes from the generic crafting table tab
 		IRecipeRegistry registry = jeiRuntime.getRecipeRegistry();
 		StreamSupport.stream(CraftingManager.REGISTRY.spliterator(), false)
 			.filter(recipe -> recipe instanceof IArcaneRecipe)
@@ -179,11 +181,10 @@ public class HEIPlugin implements IModPlugin {
 			.filter(Objects::nonNull)
 			.forEach(recipe -> registry.hideRecipe(recipe, VanillaRecipeCategoryUid.CRAFTING));
 
-
-		if(!ThaumicRoidConfig.jeiConfig.hideRecipesIfMissingResearch){
-			return;
+		//First synchronization is called from ResearchManager itself (its own handler)
+		if(ThaumicRoidConfig.jeiConfig.hideRecipesIfMissingResearch){
+			ResearchManager.runtime = jeiRuntime;
 		}
-		ResearchManager.runtime = jeiRuntime;
 	}
 
 	//Helper method to work with JEI

@@ -9,7 +9,7 @@ import java.util.List;
 public class LateMixinLoader implements ILateMixinLoader {
 	@Override
 	public List<String> getMixinConfigs() {
-		ArrayList<String> mixinConfigs = new ArrayList<>(9);
+		ArrayList<String> mixinConfigs = new ArrayList<>(11);
 		if(ThaumicRoidConfig.general.aspectTooltipInAllGUI){
 			mixinConfigs.add("mixins."+Tags.MOD_ID+".aspect_tooltip_everywhere.json");
 		}
@@ -39,6 +39,9 @@ public class LateMixinLoader implements ILateMixinLoader {
 		}
 		if(JarBrainFluidCapability.liquidXP != null){
 			mixinConfigs.add("mixins."+Tags.MOD_ID+".brainjarfluidhandler.json");
+		}
+		if(ThaumicRoidConfig.jeiConfig.jerCrystals && Loader.isModLoaded("jeresources")){
+			mixinConfigs.add("mixins."+Tags.MOD_ID+".injectjercrystals.json");
 		}
 		mixinConfigs.add("mixins."+Tags.MOD_ID+".accessors.json");
 		return mixinConfigs;

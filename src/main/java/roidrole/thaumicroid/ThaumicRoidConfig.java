@@ -72,6 +72,12 @@ public class ThaumicRoidConfig {
 		@Config.Comment("Should the crafting recipe for Salis Mundus and Triple Meat Treat appear in JEI?")
 		public boolean showSpecialRecipes = true;
 
+		@Config.Comment({
+			"Make JER mob loot include crystals dropped when killed by liquid death",
+			"Requires Just Enough Resources"
+		})
+		public boolean jerCrystals = true;
+
 		@Config.Name("Category Toggles")
 		@Config.Comment("Toggles to unregister any JEI Category")
 		public final CategoryToggle categoryToggle = new CategoryToggle();
