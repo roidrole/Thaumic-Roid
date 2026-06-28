@@ -3,6 +3,8 @@ package roidrole.thaumicroid;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.init.Items;
@@ -97,10 +99,11 @@ public class CacheManager {
 				},
 				(map, stack) -> {
 					AspectList list = AspectHelper.getObjectAspects(stack);
+					int totalCount = list.visSize();
 					list.aspects.forEach((aspect, count) -> map
 						.get(aspect)
 						.computeIfAbsent(count, ArrayList::new)
-						.add(writeItemStack(stack, count))
+						.add(writeItemStack(stack, count, (191 * count / totalCount) + 32))
 					);
 
 					cachedAmount.getAndIncrement();
@@ -135,11 +138,15 @@ public class CacheManager {
 						writer.name(entry.getKey().getTag());
 						writer.beginArray();
 						entry.getValue().forEach(
-							(count, list) -> list.forEach(stack -> {
-								try {
-									writer.jsonValue(stack);
-								} catch (IOException ignored) { }
-							})
+							(count, list) -> list
+								.stream()
+								.sorted(Comparator.comparingInt(string -> -Integer.parseInt(string.substring(1, string.indexOf(',')))))
+								.forEach(stack -> {
+									try {
+										writer.jsonValue(stack);
+									} catch (IOException ignored) { }
+								}
+							)
 						);
 						writer.endArray();
 					} catch (IOException ignored) { }
@@ -158,38 +165,42 @@ public class CacheManager {
 		}
 		long time = System.currentTimeMillis();
 		List<AspectFromItemStackCategory.AspectFromItemStackWrapper> wrappers = new ArrayList<>();
-		Map<Aspect, List<ItemStack>> cache = new LinkedHashMap<>(Aspect.aspects.size());
 
 		try (JsonReader reader = new JsonReader(new FileReader(JEI_CACHE))){
 			reader.beginObject();
 			reader.setLenient(true);
 
 			do {
+				//Read
 				Aspect aspect = Aspect.getAspect(reader.nextName());
 				List<ItemStack> list = new ArrayList<>();
-				cache.put(aspect, list);
+				IntList purityList = new IntArrayList();
 				reader.beginArray();
 				while(reader.peek() != JsonToken.END_ARRAY){
+					reader.beginArray();
+					purityList.add(reader.nextInt());
 					list.add(readItemStack(reader));
+					reader.endArray();
 				}
 				reader.endArray();
 
-			} while (reader.peek() != JsonToken.END_OBJECT);
-			reader.endObject();
-
-
-			cache.forEach((aspect, stacks) -> {
+				//Interpret
 				AspectList aspectList = new AspectList();
 				aspectList.add(aspect, 0);
 				int start = 0;
-				while (start < stacks.size() - 36) {
-					List<ItemStack> subList = stacks.subList(start, start + 36);
-					wrappers.add(new AspectFromItemStackCategory.AspectFromItemStackWrapper(aspectList, subList));
+				while (start < list.size() - 36) {
+					List<ItemStack> subList = list.subList(start, start + 36);
+					IntList subPurityList = purityList.subList(start, start + 36);
+					wrappers.add(new AspectFromItemStackCategory.AspectFromItemStackWrapper(aspectList, subList, subPurityList));
 					start += 36;
 				}
-				List<ItemStack> subList = stacks.subList(start, stacks.size());
-				wrappers.add(new AspectFromItemStackCategory.AspectFromItemStackWrapper(aspectList, subList));
-			});
+				List<ItemStack> subList = list.subList(start, list.size());
+				IntList subPurityList = purityList.subList(start, purityList.size());
+				wrappers.add(new AspectFromItemStackCategory.AspectFromItemStackWrapper(aspectList, subList, subPurityList));
+
+			} while (reader.peek() != JsonToken.END_OBJECT);
+
+			reader.endObject();
 		} catch (FileNotFoundException e) {
 			ThaumicRoid.LOGGER.error("Can't read aspect file!", e);
 			return;
@@ -203,10 +214,12 @@ public class CacheManager {
 		registry.addRecipes(wrappers, AspectFromItemStackCategory.UUID);
 	}
 
-	//Writes ItemStack to format: [resourceLocation, count, damage, tag]
-	public static String writeItemStack(ItemStack stack, int count){
+	//Writes ItemStack to format: [resourceLocation, count, purity, damage, tag]
+	public static String writeItemStack(ItemStack stack, int count, int purity){
 		StringBuilder itemNbt = new StringBuilder(64);
-		itemNbt.append("[\"");
+		itemNbt.append('[');
+		itemNbt.append(purity);
+		itemNbt.append(",\"");
 		itemNbt.append(stack.getItem().delegate.name());
 		itemNbt.append("\",");
 		itemNbt.append(count);
@@ -222,9 +235,8 @@ public class CacheManager {
 		return itemNbt.toString();
 	}
 
-	//Reads ItemStack from format: [resourceLocation, count, damage, tag]
+	//Reads ItemStack from format: resourceLocation, count, damage, tag
 	public static ItemStack readItemStack(JsonReader reader) throws IOException, NBTException {
-		reader.beginArray();
 		ItemStack stack = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(reader.nextString())), reader.nextInt());
 		if(reader.peek() == JsonToken.NUMBER){
 			stack.setItemDamage(reader.nextInt());
@@ -232,7 +244,6 @@ public class CacheManager {
 		if(reader.peek() == JsonToken.STRING){
 			stack.setTagCompound(JsonToNBT.getTagFromJson(reader.nextString()));
 		}
-		reader.endArray();
 		return stack;
 	}
 

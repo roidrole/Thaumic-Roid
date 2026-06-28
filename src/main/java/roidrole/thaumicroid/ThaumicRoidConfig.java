@@ -93,6 +93,9 @@ public class ThaumicRoidConfig {
 		})
 		public boolean jerCrystals = true;
 
+		@Config.Comment("Makes the Aspect From Itemstack category show a background that is clearer the purer the item's aspect is")
+		public boolean purityBackground = false;
+
 		@Config.Name("Category Toggles")
 		@Config.Comment("Toggles to unregister any JEI Category")
 		public final CategoryToggle categoryToggle = new CategoryToggle();

@@ -1,5 +1,7 @@
 
 ## Unreleased:
+Post-release panic
+
 **Added**: 
 - JER integration for liquid death crystal drops
 - Hot Reloading of configs

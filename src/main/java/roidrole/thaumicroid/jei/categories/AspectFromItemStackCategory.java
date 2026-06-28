@@ -1,5 +1,6 @@
 package roidrole.thaumicroid.jei.categories;
 
+import it.unimi.dsi.fastutil.ints.IntList;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -14,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import roidrole.thaumicroid.HEIPlugin;
 import roidrole.thaumicroid.Tags;
+import roidrole.thaumicroid.ThaumicRoidConfig;
 import roidrole.thaumicroid.jei.AlphaDrawable;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.aspects.AspectList;
@@ -69,7 +71,7 @@ public class AspectFromItemStackCategory implements IRecipeCategory<AspectFromIt
         int slot = 0;
         int row = 9;
         for (List<ItemStack> stacks : ingredients.getInputs(VanillaTypes.ITEM)) {
-            recipeLayout.getItemStacks().init(slot + 1, true, (slot % row) * 18 - 18 * 3 - 21 + 81, (slot / row) * 18 + 32);
+            recipeLayout.getItemStacks().init(slot + 1, true, (slot % row) * 18 - 18 * 3 - 21 + 82, (slot / row) * 18 + 32);
             recipeLayout.getItemStacks().set(slot + 1, stacks);
             ++slot;
         }
@@ -79,17 +81,37 @@ public class AspectFromItemStackCategory implements IRecipeCategory<AspectFromIt
 
         private final AspectList aspect;
         private final List<ItemStack> stacks;
+        private final IntList purity;
 
-        public AspectFromItemStackWrapper(AspectList aspect, List<ItemStack> stacks) {
+        public AspectFromItemStackWrapper(AspectList aspect, List<ItemStack> stacks, IntList purity) {
             this.aspect = aspect;
             this.stacks = stacks;
+            this.purity = purity;
         }
-
 
         @Override
         public void getIngredients(IIngredients ingredients) {
             ingredients.setOutput(HEIPlugin.ASPECT_LIST, aspect);
             ingredients.setInputs(VanillaTypes.ITEM, stacks);
+        }
+
+        @Override
+        public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+            if(!ThaumicRoidConfig.jeiConfig.purityBackground){
+                IRecipeWrapper.super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
+                return;
+            }
+            int row = 9;
+            int size = 18;
+            for (int i = 0; i < this.stacks.size(); i++) {
+                int purity = this.purity.getInt(i);
+                purity = 32 + ((255 - 64) * purity)/255;
+
+                int x = (i % row) * 18 - 18 * 3 - 21 + 82;
+                int y = (i / row) * 18 + 32;
+                Gui.drawRect(x, y, x+size, y+size, 0xFF000000 | (purity << 16) | (purity << 8) | (purity));
+            }
+            IRecipeWrapper.super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
         }
     }
 
