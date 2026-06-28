@@ -50,7 +50,7 @@ public class AspectFromItemStackCategory implements IRecipeCategory<AspectFromIt
             0,
             18 * 4 + 5,
             72,
-            72
+            73
         );
     }
 
@@ -58,7 +58,7 @@ public class AspectFromItemStackCategory implements IRecipeCategory<AspectFromIt
     public void drawExtras(Minecraft minecraft) {
         minecraft.renderEngine.bindTexture(new ResourceLocation("thaumicjei", "textures/gui/gui.png"));
         GL11.glEnable(3042);
-        Gui.drawModalRectWithCustomSizedTexture(-66 + 81 - 9, 31, 0, 0, 163, 74, 256, 256);
+        Gui.drawModalRectWithCustomSizedTexture(-66 + 81 - 9, 31, 0, 0, 164, 74, 256, 256);
         GL11.glDisable(3042);
     }
 
