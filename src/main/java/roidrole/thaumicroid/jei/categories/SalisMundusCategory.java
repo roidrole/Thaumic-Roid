@@ -93,7 +93,7 @@ public class SalisMundusCategory extends AbstractResearchCategory<SalisMundusCat
 		group.set(ingredients);
 	}
 
-	public static abstract class SalisMundusRecipeWrapper extends HasResearch {
+	public static abstract class SalisMundusRecipeWrapper extends AbstractResearchWrapper {
 		List<List<ItemStack>> input;
 		List<List<ItemStack>> output;
 		String research;

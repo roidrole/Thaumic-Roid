@@ -103,7 +103,7 @@ public class ArcaneWorkbenchCategory extends AbstractResearchCategory<ArcaneWork
         ;
     }
 
-    public static class ArcaneWorkbenchWrapper extends HasResearch {
+    public static class ArcaneWorkbenchWrapper extends AbstractResearchWrapper {
 
         private final IArcaneRecipe recipe;
 

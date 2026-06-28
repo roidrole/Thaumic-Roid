@@ -84,7 +84,7 @@ public class CrucibleCategory extends AbstractResearchCategory<CrucibleCategory.
         this.recipes = list;
     }
 
-    public static class CrucibleWrapper extends HasResearch {
+    public static class CrucibleWrapper extends AbstractResearchWrapper {
 
         private final CrucibleRecipe recipe;
 

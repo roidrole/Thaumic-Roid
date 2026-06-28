@@ -9,7 +9,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import roidrole.thaumicroid.jei.categories.AbstractResearchCategory;
-import roidrole.thaumicroid.jei.categories.HasResearch;
+import roidrole.thaumicroid.jei.categories.AbstractResearchWrapper;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchEvent;
@@ -65,7 +65,7 @@ public class ResearchManager {
             return;
         }
         for (AbstractResearchCategory<?> category : AbstractResearchCategory.categories){
-            for(HasResearch wrapper : category.recipes){
+            for(AbstractResearchWrapper wrapper : category.recipes){
                 if(wrapper.getResearch() == null){
                     runtime.getRecipeRegistry().unhideRecipe(wrapper, category.getUid());
                 }

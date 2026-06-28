@@ -29,7 +29,7 @@ import java.util.List;
  * And Thaumcraft already has all the assets to display it.
  */
 
-public abstract class HasResearch implements IRecipeWrapper {
+public abstract class AbstractResearchWrapper implements IRecipeWrapper {
     @Nullable
     public abstract String getResearch();
     public abstract int getBarrierX();
@@ -78,6 +78,9 @@ public abstract class HasResearch implements IRecipeWrapper {
         }
         ResourceLocation book;
         if (ThaumcraftCapabilities.knowsResearch(minecraft.player, this.getResearch())) {
+            if(this.getResearchEntry() == null){
+                return;
+            }
             book = new ResourceLocation("thaumicjei", "textures/gui/thaumonomicon_green.png");
         } else if(knowsParents()){
             book = new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png");

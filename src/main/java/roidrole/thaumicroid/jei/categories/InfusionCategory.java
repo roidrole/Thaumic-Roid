@@ -97,7 +97,7 @@ public class InfusionCategory extends AbstractResearchCategory<InfusionCategory.
         this.recipes = list;
     }
 
-    public static class InfusionWrapper extends HasResearch {
+    public static class InfusionWrapper extends AbstractResearchWrapper {
 
         private final InfusionRecipe recipe;
 

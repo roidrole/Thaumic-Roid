@@ -6,7 +6,7 @@ import roidrole.thaumicroid.Tags;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class AbstractResearchCategory<T extends HasResearch> implements IRecipeCategory<T> {
+public abstract class AbstractResearchCategory<T extends AbstractResearchWrapper> implements IRecipeCategory<T> {
 
 	public static ArrayList<AbstractResearchCategory<?>> categories;
 
