@@ -124,11 +124,15 @@ public class ThaumicRoidConfig {
 			@Config.Comment("Allows modification of the overlay")
 			public boolean enabled = true;
 
+			@Config.Comment("The max opacity of the center. 0 is invisible, 255 is opaque")
 			@Config.RangeInt(min = 0, max = 255)
 			public int max_value_center = 0x77;
+			@Config.Comment("The max opacity of the center. 0 is invisible, 255 is opaque")
 			@Config.RangeInt(min = 0, max = 255)
 			public int max_value_border = 0xFF;
+			@Config.Comment("The multiplier parameter for the center opacity computation")
 			public float multiplier_center = 6.15f;
+			@Config.Comment("The multiplier parameter for the border opacity computation")
 			public float multiplier_border = 6.25f;
 			@Config.Comment("The color of the hue, in format 0xRRGGBB converted to decimal because forge configs")
 			public int color = 0x6F167C;
