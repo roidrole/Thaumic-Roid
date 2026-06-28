@@ -31,12 +31,13 @@ All features of Thaumic JEI, plus:
 - Replace the default overlay with a configurable overlay whose opacity depends on the flux level, disregarding vis
 
 ### Performance
-- Aspect cache (better than the one Thaumic Speedup had)
+- Aspect cache
 - ItemStack hash
 - Recipe cache (FastWorkbench) for the pattern crafter
 - Faster oredict wildcard (direct port of Thaumic Speedup's removed feature)
-There is **experimental compat** with Thaumic Speedup 5.0 for the Itemstack hash and aspect cache. I recommend disabling both if Thaumic Speedup is installed.
 
+The Aspect cache and itemstack hash are disabled by default. You should use [Thaumic Speedup](https://github.com/LoliKingdom/Thaumic-Speedup) instead. 
+They were developed in an attempt to make Thaumic Speedup's caching more stable, but Thaumic Speedup 5.0 does it better.
 ### Miscellaneous
 - Show Thaumcraft's aspect tooltip anywhere
 - Extract/Insert liquid xp from a brain in a jar
