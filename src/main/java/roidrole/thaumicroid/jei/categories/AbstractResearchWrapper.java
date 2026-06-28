@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import roidrole.thaumicroid.Tags;
 import roidrole.thaumicroid.mixins.accessors.AccessorGuiResearchPage;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
@@ -81,11 +82,11 @@ public abstract class AbstractResearchWrapper implements IRecipeWrapper {
             if(this.getResearchEntry() == null){
                 return;
             }
-            book = new ResourceLocation("thaumicjei", "textures/gui/thaumonomicon_green.png");
+            book = new ResourceLocation(Tags.MOD_ID, "textures/gui/thaumonomicon_green.png");
         } else if(knowsParents()){
             book = new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png");
         } else {
-            book = new ResourceLocation("thaumicjei", "textures/gui/thaumonomicon_red.png");
+            book = new ResourceLocation(Tags.MOD_ID, "textures/gui/thaumonomicon_red.png");
         }
         minecraft.getTextureManager().bindTexture(book);
 
