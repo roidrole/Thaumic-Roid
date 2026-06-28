@@ -112,7 +112,7 @@ public class ThaumicRoidConfig {
 
 		@Config.Comment({
 			"Replaces the default overlay with a constant purple overlay whose opacity depends on flux",
-			"The formulas for opacity are separated between the center and the border of chunks ard are min(max_value, floor(fluxAmount * mutliplier))"
+			"The formulas for opacity are separated between the center and the border of chunks and are min(max_value, floor(fluxAmount * mutliplier))"
 		})
 		public final Overlay overlay = new Overlay();
 		public static class Overlay {
