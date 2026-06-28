@@ -28,7 +28,7 @@ All features of Thaumic JEI, plus:
 
 ### Visual Ores
 - Thaumic Dioptra will update the aura display of chunks in a 13x13 square centered on itself of every player who interacted with it.
-- Replace the default overlay with a much gentler one that only considers flux (progressively more opaque purple)
+- Replace the default overlay with a configurable overlay whose opacity depends on the flux level, disregarding vis
 
 ### Performance
 - Aspect cache (better than the one Thaumic Speedup had)
