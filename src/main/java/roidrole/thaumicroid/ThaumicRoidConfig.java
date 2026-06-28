@@ -19,13 +19,14 @@ public class ThaumicRoidConfig {
 		public boolean aspectTooltipInAllGUI = true;
 
 		@Config.Comment({
-			"The fluid experience your pack uses. For <liquid:xp>, write \"xp\" (no quotes)",
-			"Used to insert/extract liquid xp from a brain in a jar",
+			"The fluid experience contained in the brain in a jar.",
+			"Format: \"<liquid:xp>\", becomes \"xp\" (no quotes)",
 			"Leave empty to disable"
 		})
 		public String liquidXP = "";
 
 		@Config.Comment("The amount of mB of liquid XP per experience point")
+		@Config.RangeInt(min = 0, max = Byte.MAX_VALUE)
 		public int xpPointToMb = 0;
 	}
 
@@ -136,7 +137,10 @@ public class ThaumicRoidConfig {
 	})
 	public static final HWYLA hwylaConfig = new HWYLA();
 	public static class HWYLA {
-		@Config.Comment("Integration for the brain in a jar. Shows xp contents")
+		@Config.Comment({
+			"Integration for the brain in a jar. Shows xp contents",
+			"Automatically disabled if the brain in a jar acts as a fluid tank for xp."
+		})
 		public boolean brainInJar = true;
 		@Config.Comment("Integration for essentia tubes. Shows contents and suction")
 		public boolean essentiaTransport = true;

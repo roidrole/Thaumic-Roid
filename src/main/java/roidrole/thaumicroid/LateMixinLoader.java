@@ -1,7 +1,6 @@
 package roidrole.thaumicroid;
 
 import net.minecraftforge.fml.common.Loader;
-import roidrole.thaumicroid.utils.JarBrainFluidCapability;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.ArrayList;

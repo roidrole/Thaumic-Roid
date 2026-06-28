@@ -1,4 +1,4 @@
-package roidrole.thaumicroid.utils;
+package roidrole.thaumicroid;
 
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import roidrole.thaumicroid.ThaumicRoidConfig;
+import roidrole.thaumicroid.utils.MixinIntField;
 import thaumcraft.common.tiles.devices.TileJarBrain;
 
 import javax.annotation.Nullable;

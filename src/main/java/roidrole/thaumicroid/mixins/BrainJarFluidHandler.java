@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import roidrole.thaumicroid.utils.JarBrainFluidCapability;
+import roidrole.thaumicroid.JarBrainFluidCapability;
 import roidrole.thaumicroid.utils.MixinIntField;
 import thaumcraft.common.tiles.devices.TileJarBrain;
 import thaumcraft.common.tiles.essentia.TileJar;
