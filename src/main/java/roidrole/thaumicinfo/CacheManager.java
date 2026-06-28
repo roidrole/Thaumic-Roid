@@ -89,19 +89,12 @@ public class CacheManager {
 				return true;
 			})
 			.collect(
-				//So I don't have to computeIfAbsent
-				() -> {
-					Map<Aspect, ArrayMap<List<String>>> map = new HashMap<>();
-					for(Aspect aspect : Aspect.aspects.values()){
-						map.put(aspect, new ArrayMap<>());
-					}
-					return map;
-				},
+				HashMap::new,
 				(map, stack) -> {
 					AspectList list = AspectHelper.getObjectAspects(stack);
 					int totalCount = list.visSize();
 					list.aspects.forEach((aspect, count) -> map
-						.get(aspect)
+						.computeIfAbsent(aspect, key -> new ArrayMap<>())
 						.computeIfAbsent(count, ArrayList::new)
 						.add(writeItemStack(stack, count, (191 * count / totalCount) + 32))
 					);
@@ -115,7 +108,7 @@ public class CacheManager {
 				(map1, map2) -> {
 					//Merge 2 in 1
 					map2.forEach((key2, value2) -> {
-						ArrayMap<List<String>> value1 = map1.get(key2);
+						ArrayMap<List<String>> value1 = map1.computeIfAbsent(key2, key -> new ArrayMap<>());
 						value2.forEach((count2, strings2) -> {
 							value1.computeIfAbsent(count2, ArrayList::new).addAll(strings2);
 						});

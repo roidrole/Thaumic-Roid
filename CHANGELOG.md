@@ -8,7 +8,9 @@ Post-release panic
 - Comments to overlay multiplier config options
 - Purity background to AspectFromItemStackCategory (lighter the more % of the item's aspect this one is)
 
-**Fixed** Off-by-one AspectFromItemStackCategory background
+**Fixed:** 
+- Off-by-one AspectFromItemStackCategory background
+- Crash if an aspect does not exist in Aspect.aspects
 
 **Changed:** Rebranded as Thaumic Information (thaumicinfo)
 
