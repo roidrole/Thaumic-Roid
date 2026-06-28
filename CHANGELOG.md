@@ -10,5 +10,7 @@ Post-release panic
 
 **Fixed** Off-by-one AspectFromItemStackCategory background
 
+**Changed:** Rebranded as Thaumic Information (thaumicinfo)
+
 ## 1.0.0:
 First release
