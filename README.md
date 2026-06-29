@@ -16,6 +16,8 @@ All features of Thaumic JEI, plus:
 - Special recipes (Triple Meat Treat and Salis Mundis) are shown as recipes instead of descriptions
 - Configs to remove any combination of JEI tabs
 - Blacklist spawn eggs from aspect checking by default 
+- Just Enough Resources integration for vis crystal drop on liquid death kill
+- Purity background in AspectFromItemstack (white means only this aspect, black means 0% of total aspects)
 
 ### Waila
 - Suction and amount is shown in Waila (as opposed to only contents)
@@ -39,4 +41,4 @@ The Aspect cache and itemstack hash are disabled by default. You should use [Tha
 They were developed in an attempt to make Thaumic Speedup's caching more stable, but Thaumic Speedup 5.0 does it better.
 ### Miscellaneous
 - Show Thaumcraft's aspect tooltip anywhere
-- Extract/Insert liquid xp from a brain in a jar
+- Extract/Insert liquid xp from a brain in a jar (a configurable liquid really)

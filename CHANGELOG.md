@@ -1,6 +1,5 @@
 
-## Unreleased:
-Post-release panic
+## 1.1.0:
 
 **Added**: 
 - JER integration for liquid death crystal drops
