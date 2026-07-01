@@ -45,7 +45,8 @@ public class CacheManager {
 	public static void writeCaches(){
 		boolean genAspectCache = ThaumicInformationConfig.performanceConfig.aspectCache && !ASPECT_CACHE.isFile();
 		boolean genEntityCache = ThaumicInformationConfig.performanceConfig.aspectCache && !ENTITY_CACHE.isFile();
-		boolean genJEICache = ThaumicInformationConfig.jeiConfig.categoryToggle.aspectFromItemStack && !JEI_CACHE.isFile();
+		//jeiRegistry is null on dedicated servers or if JEI is not installed
+		boolean genJEICache = jeiRegistry != null && ThaumicInformationConfig.jeiConfig.categoryToggle.aspectFromItemStack && !JEI_CACHE.isFile();
 		
 		if(genAspectCache){
 			createAspectCache(ASPECT_CACHE);
@@ -112,9 +113,8 @@ public class CacheManager {
 					//Merge 2 in 1
 					map2.forEach((key2, value2) -> {
 						ArrayMap<List<String>> value1 = map1.computeIfAbsent(key2, key -> new ArrayMap<>());
-						value2.forEach((count2, strings2) -> {
-							value1.computeIfAbsent(count2, ArrayList::new).addAll(strings2);
-						});
+						value2.forEach((count2, strings2) ->
+							value1.computeIfAbsent(count2, ArrayList::new).addAll(strings2));
 					});
 				}
 			)
