@@ -1,6 +1,6 @@
-## Unreleased
+## 1.1.1
 - Fixed crash on dedicated servers
-- Remove hard dependency on JEI
+- Removed hard dependency on JEI
 
 ## 1.1.0:
 
