@@ -210,7 +210,7 @@ public class CacheManager {
 		registry.addRecipes(wrappers, AspectFromItemStackCategory.UUID);
 	}
 
-	//Writes ItemStack to format: [resourceLocation, count, purity, damage, tag]
+	//Writes ItemStack to format: [purity, resourceLocation, count, damage, tag]
 	public static String writeItemStack(ItemStack stack, int count, int purity){
 		StringBuilder itemNbt = new StringBuilder(64);
 		itemNbt.append('[');
