@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.2
 - Fixed crash on negative aspect count
 - Slightly improve the aspect cache creation
 
